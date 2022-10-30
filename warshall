@@ -1,0 +1,49 @@
+/*设计思路：
+将矩阵用数组的形式呈现，分别赋值为0或1。按照 遍历寻找第一列为1的元素所在行，将第一行与此行元素进行逻辑加的运算 的运算规则，遍历所有行列
+其中对应的两个元素数值情况分四种：
+j列为1元素所在行的各个元素若为1，运算逻辑加时与其他行元素值无关。
+j列为1元素所在行的各个元素若为0，j行对应元素为1是此元素赋值为1，否则依然为0。
+因此只需考虑“ j列为1元素所在行的各个元素若为0，j行对应元素为1是此元素赋值为1”这种情况。
+ */
+import java.util.Scanner;
+public class Warshall {
+    public static void main(String args[]){
+        Scanner get=new Scanner(System.in);
+        System.out.print("请输入矩阵的阶数：");
+        int N= get.nextInt();
+        int[][] a=new int[N][N];
+        for(int i=0;i<N;i++){
+            for(int j=0;j<N;j++){
+                a[i][j]=get.nextInt();
+            }
+        }
+        for(int j=0;j<N;j++){
+            for(int i=0;i<N;i++){
+                if(a[i][j]==1){
+                    for(int k=0;k<N;k++){
+                        if(a[i][k]==0&&a[j][k]==1){  //只考虑特定情况，if结构进行逻辑加运算
+                            a[i][k]=1;
+                        }
+                    }
+                }
+            }
+        }
+       /*for(int j=0;j<N;j++){
+            for(int i=0;i<N;i++){
+                if(a[i][j]==1){
+                    for(int k=0;k<N;k++){
+                        if(a[j][k]==0&&a[i][k]==1){
+                            a[j][k]=1;
+                        }
+                    }
+                }
+            }
+        }*/
+        for(int i=0;i<N;i++){
+            for(int j=0;j<N;j++){
+                System.out.printf("%d",a[i][j]);
+            }
+            System.out.println();
+        }
+    }
+}
